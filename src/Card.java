@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -6,17 +5,17 @@ public class Card {
     private String faceName;
     private int faceValue;
     private String suit;
-    /**
-    * This is the constructor. It does not have a return type,
-    * and the name must be exactly the same as the class name
-    * (including the upper case letter)
-    * you can have overload constructors.
-    * @param faceName - example ace
-     * @param suit - example spades
-    * @param faceValue- example 14
-     */
 
-    public Card(String faceName, String suit, int faceValue){
+    /**
+     * This is the constructor.  It does not have a return type,
+     * and the name must be exactly the same as the class name (including the upper case letter)
+     * You can have overloaded constructors.
+     * @param faceName - example ace
+     * @param suit - example spades
+     * @param faceValue - example 14
+     */
+    public Card(String faceName, String suit, int faceValue)
+    {
         setFaceName(faceName);
         setSuit(suit);
         setFaceValue(faceValue);
@@ -27,26 +26,46 @@ public class Card {
      * @param faceName
      * @param suit
      */
-    public Card (String faceName, String suit){
+    public Card(String faceName, String suit) {
         setFaceName(faceName);
         setSuit(suit);
-
     }
 
     public String getFaceName() {
         return faceName;
     }
 
+
+    /**
+     * This method will validate if the argument is in the list of valid face names
+     * and set the instance variable
+     * @param faceName
+     */
     public void setFaceName(String faceName) {
-        this.faceName = faceName;
+        faceName = faceName.toLowerCase();
+        if (getValidFaceNames().contains(faceName))
+            this.faceName = faceName;
+        else
+            throw new IllegalArgumentException(faceName + " is not a valid face name, use 1 of "+
+                    getValidFaceNames());
     }
 
     public int getFaceValue() {
         return faceValue;
     }
 
+    /**
+     * This will return a list of the valid face names
+     * @return List holding String objects with the valid face names
+     */
+    public static List<String> getValidFaceNames()
+    {
+        return Arrays.asList("two","three","four","five","six","seven","eight","nine",
+                "ten","jack","queen","king","ace");
+    }
+
     public void setFaceValue(int faceValue) {
-        if (faceValue>= 1 && faceValue<= 14)
+        if (faceValue >= 1 && faceValue <= 14)
             this.faceValue = faceValue;
         else
             throw new IllegalArgumentException("face value must be between 1 and 14 inclusive");
@@ -57,23 +76,28 @@ public class Card {
     }
 
     /**
-     * This method will return an Arraylist of valid suit names
+     * This method will return an ArrayList of valid suit names
      * @return a list of String objects that reflect valid suit names
      */
-    public static List<String> getValidSuits(){
-        return Arrays.asList("Spades", "Clubs", "Heart", "Diamonds");
+    public static List<String> getValidSuits()
+    {
+        return Arrays.asList("spades","clubs","hearts","diamonds");
     }
+
     public void setSuit(String suit) {
+        suit = suit.toLowerCase();
         if (getValidSuits().contains(suit))
             this.suit = suit;
         else
-            throw new IllegalArgumentException(suit+ " was entered, valid suits are: " +getValidSuits());
+            throw new IllegalArgumentException(suit + " was entered, valid suits are: "+getValidSuits());
     }
+
     /**
-     * this method will retunr a string that represents
+     * This method will return a String that represents
      * the card with the face name and suit
      */
-    public String toString(){
+    public String toString()
+    {
         return faceName + " of " + suit;
     }
 }
